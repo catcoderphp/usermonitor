@@ -1,0 +1,24 @@
+{
+    "name": "catcoderphp/usermonitor",
+    "description": "Save logs of user activity on the site",
+    "type": "library",
+    "keywords": ["yii2","extension","user monitor"," entries logs"],
+    "license": "GPL-3.0+",
+    "authors": [
+        {
+            "name": "Luis Jaen",
+            "email": "catcoder.php@gmail.com"
+        }
+    ],
+    "require": {
+        "yiisoft/yii2": "~2.0.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "catcoderphp\\usermonitor\\": "."
+        }
+    },
+    "extra":{
+        "bootstrap": "catcoderphp\\usermonitor\\Bootstrap"
+    }
+}
