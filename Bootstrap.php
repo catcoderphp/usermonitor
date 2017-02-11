@@ -20,7 +20,6 @@ class Bootstrap implements BootstrapInterface
         // Make sure to register the base folder as alias as well or things like assets won't work anymore
         \Yii::setAlias('@catcoderphp/usermonitor', __DIR__);
 
-
         $moduleName = UserMonitor::findModuleIdentifier();
         if ($moduleName) {
             // The module was added in the configuration, make sure to add it to the application bootstrap so it gets loaded

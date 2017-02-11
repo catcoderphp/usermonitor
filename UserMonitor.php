@@ -3,19 +3,18 @@
 namespace catcoderphp\usermonitor;
 
 
+use catcoderphp\usermonitor\components\SpecialCase;
 use yii\base\Application;
+use yii\base\Event;
 use yii\base\Module;
 use Yii;
 
 class UserMonitor extends Module {
 
-
     public $applicationIdentifier;
-
     public $userIp;
-
     public $user;
-
+    public $currentURI;
     /**
      * init event handler of functions
      */
@@ -32,38 +31,34 @@ class UserMonitor extends Module {
         $app->on(Application::EVENT_AFTER_REQUEST,[
             $this, "onEventAfterRequest"
         ]);
+        $this->on(SpecialCase::SPECIAL_CASE,[
+            $this,"onSpecialCase"
+        ]);
+
     }
 
     /**
      * even trigger from init
      */
     public function onEventBeforeAction() {
-        echo "hola mundo antes de la accion";
+        //print_r($this->currentURI);
+        //echo Yii::$app->request->queryString;
     }
 
-    public function onEventAfterRequest() {
-        echo "hola mundo despues de la request";
+    public function onEventAfterRequest($event) {
+        print_r($event);die;
+        echo $this->currentURI;
+
+        //echo "hola mundo despues de la request";
     }
 
-    /**
-     * @return int|null|string
-     */
-    public static function findModuleIdentifier()
-    {
-        foreach (Yii::$app->modules as $name => $module) {
-            $class = null;
-            if (is_string($module))
-                $class = $module;
-            elseif (is_array($module)) {
-                if (isset($module['class']))
-                    $class = $module['class'];
-            } else
-                $class = $module::className();
-            $parts = explode('\\', $class);
-            if ($class && strtolower(end($parts)) == 'usermonitor')
-                return $name;
-        }
-        return null;
+    public function save($params) {
+        print_r($params);die;
     }
+
+    public function onSpecialCase() {
+        echo "hola";die;
+    }
+
 
 }
