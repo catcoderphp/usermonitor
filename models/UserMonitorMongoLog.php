@@ -16,41 +16,32 @@ use Yii;
  * @property string $event
  * @property string $description
  */
-class UserMonitorLog extends \yii\db\ActiveRecord
+class UserMonitorMongoLog extends \yii\mongodb\ActiveRecord
 {
     /**
      * @inheritdoc
      */
-    public static function tableName()
+    public static function collectionName()
     {
-        return 'user_monitor';
+        return 'logs';
     }
+
+
 
     /**
      * @inheritdoc
      */
-    public function rules()
+    public function attributes()
     {
         return [
-            [['created'], 'integer'],
-            [['application_identifier', 'user_identifier', 'ip', 'route', 'event', 'description'], 'string', 'max' => 255],
-        ];
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function attributeLabels()
-    {
-        return [
-            'id' => 'ID',
-            'created' => 'Created',
-            'application_identifier' => 'Application Identifier',
-            'user_identifier' => 'User Identifier',
-            'ip' => 'Ip',
-            'route' => 'Route',
-            'event' => 'Event',
-            'description' => 'Description',
+            '_id' ,
+            'created',
+            'application_identifier',
+            'user_identifier',
+            'ip' ,
+            'route',
+            'event',
+            'description'
         ];
     }
 
@@ -63,7 +54,6 @@ class UserMonitorLog extends \yii\db\ActiveRecord
         $this->route = $params["route"];
         $this->event = $params["event"];
         $this->description = $params["description"];
-        $this->save(false,array_keys($params));
+        $this->save();
     }
 }
-

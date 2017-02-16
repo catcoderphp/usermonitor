@@ -2,18 +2,19 @@
 
 namespace catcoderphp\usermonitor;
 
-use catcoderphp\usermonitor\models\UserMonitorLog;
+use catcoderphp\usermonitor\db\FactoryDatabaseEngine;
 use yii\base\Application;
 use yii\base\Module;
 use Yii;
 
 class UserMonitor extends Module {
 
-    public $applicationIdentifier;
-    public $userIp;
-    public $userModel;
-    public $currentURI;
+    public $applicationIdentifier = "MY APP";
+    public $userIp = "127.0.0.1";
+    public $userModel = [];
+    public $currentURI = "http://127.0.0.1/index";
     public $eventName;
+    public $databaseEngine = ["mongo_active_record" => false];
     private $model;
     private $app;
     public static $specialEventParams;
@@ -87,11 +88,8 @@ class UserMonitor extends Module {
     }
 
     private function getModel(){
-        if(!$this->model instanceof UserMonitorLog) {
-            $this->model = new UserMonitorLog();
-        }
-
-        return $this->model;
+        $db = new FactoryDatabaseEngine($this->databaseEngine["mongo_active_record"]);
+        return $db->model;
     }
 
 }
