@@ -25,7 +25,30 @@ to the require section of your `composer.json` file.
 Usage
 -----
 
-Once the extension is installed, simply use it in your code by  :
+Once the extension is installed, modify your config file like this:
 
 ```php
-<?= \catcoderphp\usermonitor\AutoloadExample::widget(); ?>```
+<?php
+$config = [
+    'bootstrap' => ['log','usermonitor'],
+        'modules' =>[
+            'usermonitor' => [
+                'class' => 'catcoderphp\usermonitor\UserMonitor',
+                'userIp' => $_SERVER["REMOTE_ADDR"],
+                "applicationIdentifier" => "MY APP",
+                "currentURI" => $_SERVER["REQUEST_URI"],
+                "eventName" => "SOME EVENT NAME TO SAVE ON DB",
+                "databaseEngine" => [
+                    //if is false, the module use the yii's active record by default
+                    "mongo_active_record" => true,
+                ],
+                "userModel" => [
+                    //CLASS, the class namespace when you can get your user's info; by example...
+                    "class" => \app\models\User::class,
+                    //FIEL, the field to identify your user
+                    "field" => "email"
+                ]
+            ]
+        ],
+    ];
+```
